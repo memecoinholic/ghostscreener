@@ -1,0 +1,314 @@
+/* ============================================================
+   WENLAMBO — Custom animations & interactions
+   No text or color changes. Motion, hover & mobile menu only.
+   ============================================================ */
+
+/* --- respect reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; }
+}
+
+/* ------------------------------------------------------------
+   1. SCROLL BUTTON — animated green (#7824da) double chevron
+   Same size (50x50) and same bg (#101309) as before.
+   ------------------------------------------------------------ */
+.scroll {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.scroll:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 26px rgba(204, 255, 0, .35);
+}
+
+.scroll::before,
+.scroll::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  width: 13px;
+  height: 13px;
+  border-right: 3px solid #7824da;
+  border-bottom: 3px solid #7824da;
+  border-radius: 2px;
+  opacity: 0;
+  animation: wl-scrollArrow 1.6s cubic-bezier(.6, 0, .2, 1) infinite;
+}
+
+.scroll::after {
+  animation-delay: .45s;
+}
+
+@keyframes wl-scrollArrow {
+  0%   { opacity: 0; transform: translateY(-9px) rotate(45deg); }
+  45%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(9px)  rotate(45deg); }
+}
+
+/* ------------------------------------------------------------
+   2. HERO — subtle life
+   ------------------------------------------------------------ */
+.section_hero {
+  animation: wl-gridPan 32s linear infinite;
+}
+
+@keyframes wl-gridPan {
+  from { background-position: 50% 0; }
+  to   { background-position: 50% 700px; }
+}
+
+.logo {
+  animation: wl-floatLogo 4.5s ease-in-out infinite;
+  transition: transform .35s ease, filter .35s ease;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 22px rgba(16, 19, 9, .45));
+}
+
+@keyframes wl-floatLogo {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+/* ------------------------------------------------------------
+   3. TEXT HOVER — titles glow, paragraphs brighten (no colour change)
+   ------------------------------------------------------------ */
+.title,
+.title_light {
+  transition: text-shadow .35s ease, transform .35s ease;
+}
+.title:hover,
+.title_light:hover {
+  text-shadow: 0 0 24px rgba(204, 255, 0, .75);
+  transform: scale(1.03);
+}
+
+.title_dark,
+.title_how {
+  transition: text-shadow .35s ease, transform .35s ease;
+}
+.title_dark:hover {
+  text-shadow: 0 0 22px rgba(16, 18, 10, .35);
+  transform: scale(1.03);
+}
+.title_how:hover {
+  text-shadow: 0 0 20px rgba(204, 255, 0, .6);
+}
+
+.para1,
+.paragraph {
+  transition: text-shadow .35s ease;
+}
+.para1:hover {
+  text-shadow: 0 0 14px rgba(204, 255, 0, .22);
+}
+.paragraph:hover {
+  text-shadow: 0 0 14px rgba(206, 219, 176, .4);
+}
+
+.color:hover,
+.color_bold:hover {
+  text-shadow: 0 0 16px rgba(204, 255, 0, .8);
+}
+
+/* ------------------------------------------------------------
+   4. GALLERY MEMES — lift, zoom & glow on hover
+   ------------------------------------------------------------ */
+.meme {
+  transition: transform .4s cubic-bezier(.2, .7, .3, 1);
+  will-change: transform;
+}
+.meme:hover {
+  transform: translateY(-10px) scale(1.06);
+  z-index: 2;
+  animation: wl-memeWiggle .6s ease-in-out infinite;
+}
+
+@keyframes wl-memeWiggle {
+  0%   { transform: translateY(-10px) scale(1.06) rotate(-2.5deg); }
+  50%  { transform: translateY(-10px) scale(1.06) rotate(2.5deg); }
+  100% { transform: translateY(-10px) scale(1.06) rotate(-2.5deg); }
+}
+
+/* ------------------------------------------------------------
+   5. BUTTONS — footer socials + CTA polish
+   ------------------------------------------------------------ */
+.x, .tg, .dex {
+  transition: transform .3s ease, box-shadow .3s ease, background-color .3s ease;
+}
+.x:hover, .tg:hover, .dex:hover {
+  transform: translateY(-7px) scale(1.08);
+  box-shadow: 0 14px 26px rgba(16, 18, 10, .45);
+}
+
+.buy_button, .ca, .ca_mobile {
+  transition: color .3s ease, background-color .3s ease,
+              border-color .3s ease, transform .3s ease, box-shadow .3s ease;
+}
+.buy_button:hover, .ca:hover, .ca_mobile:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(204, 255, 0, .4);
+}
+
+.menu_link {
+  transition: transform .25s ease, text-shadow .25s ease;
+}
+.menu_link:hover {
+  transform: translateY(-2px);
+  text-shadow: 0 0 14px rgba(16, 19, 9, .35);
+}
+
+/* ------------------------------------------------------------
+   6. SCROLL REVEAL (classes added by JS, so no-JS stays visible)
+   ------------------------------------------------------------ */
+.wl-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity .8s ease, transform .8s cubic-bezier(.2, .7, .3, 1);
+}
+.wl-reveal.wl-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ------------------------------------------------------------
+   7. MOBILE MENU — hamburger + full-screen overlay
+   ------------------------------------------------------------ */
+.hamburger {
+  display: none;
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  z-index: 130;
+  background: transparent;
+  border: none;
+}
+.hamburger span {
+  display: block;
+  width: 30px;
+  height: 3px;
+  border-radius: 3px;
+  background: #101309;
+  transition: transform .35s ease, opacity .25s ease, background-color .35s ease;
+}
+.hamburger.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+.mobile_menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 34px;
+  background-color: #7824da;
+  background-image: url('../images/grid.png');
+  background-position: 50%;
+  background-size: 700px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6%);
+  transition: opacity .4s ease, visibility .4s ease, transform .5s cubic-bezier(.7, 0, .2, 1);
+}
+.mobile_menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.mobile_menu_link {
+  color: #101309;
+  background-color: transparent;
+  padding: 6px 10px;
+  font-family: SF, Arial, sans-serif;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: transform .45s ease, opacity .45s ease, text-shadow .25s ease;
+}
+.mobile_menu_link:hover {
+  text-shadow: 0 0 16px rgba(16, 19, 9, .4);
+}
+.mobile_buy_button {
+  color: #7824da;
+  background-color: #101309;
+  border: 2px solid #101309;
+  border-radius: 100px;
+  padding: 16px 52px;
+  margin-top: 10px;
+  font-family: SF, Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: transform .45s ease, opacity .45s ease, box-shadow .3s ease;
+}
+.mobile_buy_button:hover {
+  box-shadow: 0 12px 28px rgba(16, 19, 9, .4);
+}
+
+/* staggered entrance of overlay items */
+.mobile_menu.open .mobile_menu_link,
+.mobile_menu.open .mobile_buy_button {
+  opacity: 1;
+  transform: translateY(0);
+}
+.mobile_menu.open .mobile_menu_link:nth-child(1) { transition-delay: .10s; }
+.mobile_menu.open .mobile_menu_link:nth-child(2) { transition-delay: .18s; }
+.mobile_menu.open .mobile_menu_link:nth-child(3) { transition-delay: .26s; }
+.mobile_menu.open .mobile_menu_link:nth-child(4) { transition-delay: .34s; }
+.mobile_menu.open .mobile_buy_button            { transition-delay: .42s; }
+
+body.wl-lock { overflow: hidden; }
+
+@media screen and (max-width: 767px) {
+  .header_right .menu_link,
+  .header_right .buy_button { display: none !important; }
+  .hamburger { display: flex; }
+  .mobile_menu { display: flex; }
+}
+.ghostscreener{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 900px;
+    height: auto;
+}
+.video-container{
+    position: relative;
+    width: 100%;
+    max-width: 940px;
+    margin: 0 auto;
+    aspect-ratio: 16 / 9;
+}
+
+.video-container .video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 16px; /* opsional */
+}
